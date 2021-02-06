@@ -342,19 +342,26 @@ namespace TicTacToe
 		}
         static void Main(string[] args)
 		{
-			Console.WriteLine("TicTacToe");
-			//Initialise game
-			TicTacToe TicTacToeGame = new TicTacToe();
+			Console.WriteLine("Welcome To TicTacToe");
+			char Choice = 'Y';
+            while (Choice == 'Y')
+            {
+				//Initialise game
+				TicTacToe TicTacToeGame = new TicTacToe();
 
-			//choose letter
-			TicTacToeGame.ChooseLetter();
+				//choose letter
+				TicTacToeGame.ChooseLetter();
 
-			//show blank board
-			TicTacToeGame.ShowBoard();
+				//show blank board
+				TicTacToeGame.ShowBoard();
 
-			TicTacToeGame.MakeToss();
+				TicTacToeGame.MakeToss();
 
-			TicTacToeGame.PlayUntilGameOver();
+				TicTacToeGame.PlayUntilGameOver();
+
+                Console.WriteLine("Play again? Y | N :");
+                Choice = Console.ReadLine()[0];
+			}			
 		}      
     }
 }
