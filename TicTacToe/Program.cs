@@ -6,8 +6,15 @@ namespace TicTacToe
 	{
 		private const int BoardSize = 10;
 		private char[] Board = new char[BoardSize];
-		private char PlayerLetter;
+		private char UserLetter;
 		private char ComputerLetter;
+		private char CurrentPlayerLetter;
+ 
+		private enum Players { 
+		USER, COMPUTER
+		}
+
+		private Players CurrentPlayer;
 
 		//initialise board
 		TicTacToe()
@@ -44,8 +51,8 @@ namespace TicTacToe
 		private void ChooseLetter()
 		{
 			Console.WriteLine("enter your letter (X or O):");
-			PlayerLetter = Console.ReadLine().ToUpper()[0];
-			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
+			UserLetter = Console.ReadLine().ToUpper()[0];
+			ComputerLetter = UserLetter == 'X' ? 'O' : 'X';
 		}
 
 		public bool CheckFreeSpace()
@@ -65,7 +72,7 @@ namespace TicTacToe
 				if (InputIndex > 0 && InputIndex < 10)
 				{
 					if (Board[InputIndex] == ' ')
-						Board[InputIndex] = PlayerLetter;
+						Board[InputIndex] = UserLetter;
 					else
 						Console.WriteLine("Index is not empty");
 				}
@@ -73,6 +80,25 @@ namespace TicTacToe
 					Console.WriteLine("wrong index");
 			}
 		}
+
+		public void MakeToss() {
+			char[] TossArray = new Char[2] { 'H', 'T' };
+			Console.WriteLine("Toss");
+			Console.WriteLine("choose H head or T tail");
+			char PlayerToss = Console.ReadLine()[0];
+
+			if (TossArray[new Random().Next(0, 2)] == PlayerToss)
+			{
+				CurrentPlayerLetter = UserLetter;
+				CurrentPlayer = Players.USER;
+			}
+			else
+			{
+				CurrentPlayerLetter = ComputerLetter;
+				CurrentPlayer = Players.COMPUTER;
+			}
+		}
+
 		static void Main(string[] args)
 		{
 			Console.WriteLine("TicTacToe");
@@ -85,9 +111,9 @@ namespace TicTacToe
 			//show blank board
 			TicTacToeGame.ShowBoard();
 
+			TicTacToeGame.MakeToss();
 			//make move
 			TicTacToeGame.MakeMove();
-
 			TicTacToeGame.ShowBoard();
 
 			//make move
