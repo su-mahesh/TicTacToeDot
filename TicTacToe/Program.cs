@@ -166,7 +166,7 @@ namespace TicTacToe
 		{
 			if (Board[1] == CheckLetter && Board[5] == CheckLetter && Board[9] == CheckLetter)
 				return true;
-			if (Board[3] == CheckLetter && Board[5] == CheckLetter && Board[3] == CheckLetter)
+			if (Board[3] == CheckLetter && Board[5] == CheckLetter && Board[7] == CheckLetter)
 				return true;
 			return false;
 		}
@@ -195,12 +195,38 @@ namespace TicTacToe
 
 		private void ComputerMove()
 		{
-            Console.WriteLine("computersmove");
-			if (CheckFreeSpace() && (CheckIfWinsOrBlock(ComputerLetter) || CheckIfWinsOrBlock(UserLetter)))
-            {
-                Console.WriteLine("computer move drawn");
-            }
+			if (CheckIfWinsOrBlock(ComputerLetter) || CheckIfWinsOrBlock(UserLetter) || TakeAvailableCorner())
+			{
+				Console.WriteLine("computers move drawn");
+			}
 			
+			
+        }
+
+        private bool TakeAvailableCorner()
+        {
+			if (Board[1] == ' ')
+			{
+				Board[1] = ComputerLetter;
+				return true;
+			}
+			else if (Board[3] == ' ')
+			{
+				Board[3] = ComputerLetter;
+				return true;
+			}
+			else if (Board[7] == ' ')
+			{
+				Board[7] = ComputerLetter;
+				return true;
+			}
+			else if (Board[9] == ' ')
+			{
+				Board[9] = ComputerLetter;
+				return true;
+			}
+
+			return false;
         }
 
         private bool CheckIfWinsOrBlock(char CheckLetter)
@@ -240,7 +266,8 @@ namespace TicTacToe
 						}
 						break;
 					case 5:
-						if ((Board[2] == CheckLetter && Board[8] == CheckLetter) || (Board[4] == CheckLetter && Board[6] == CheckLetter))
+						if ((Board[2] == CheckLetter && Board[8] == CheckLetter) || (Board[4] == CheckLetter && Board[6] == CheckLetter)
+							|| (Board[1] == CheckLetter && Board[9] == CheckLetter) || (Board[7] == CheckLetter && Board[3] == CheckLetter))
 						{
 							Board[5] = ComputerLetter;
 							return true;
