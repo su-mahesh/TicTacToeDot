@@ -39,10 +39,12 @@ namespace TicTacToe
 			}
 			Console.WriteLine("");
 		}
+
+		//choose playing letter X or O
 		private void ChooseLetter()
 		{
 			Console.WriteLine("enter your letter (X or O):");
-			PlayerLetter = Console.ReadLine()[0];
+			PlayerLetter = Console.ReadLine().ToUpper()[0];
 			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
 		}
 
@@ -57,7 +59,6 @@ namespace TicTacToe
 
 			//show blank board
 			TicTacToeGame.ShowBoard();
-
 		}
 	}
 }
