@@ -6,7 +6,9 @@ namespace TicTacToe
 	{
 		private const int BoardSize = 10;
 		private char[] Board = new char[BoardSize];
-		
+		private char PlayerLetter;
+		private char ComputerLetter;
+
 		//initialise board
 		TicTacToe()
 		{
@@ -47,7 +49,17 @@ namespace TicTacToe
 			//show blank board
 			TicTacToeGame.ShowBoard();
 
+			TicTacToeGame.ChooseLetter();
+
 
 		}
-	}
+
+        private void ChooseLetter()
+        {
+            Console.WriteLine("enter your letter (X or O):");
+            PlayerLetter = Console.ReadLine()[0];
+
+			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
+        }
+    }
 }
