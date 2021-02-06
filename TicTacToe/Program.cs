@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TicTacToe
 {
@@ -10,7 +11,8 @@ namespace TicTacToe
 		private char ComputerLetter;
 		private char CurrentPlayerLetter;
 		private char IdlePlayerLetter;
- 
+		List<int> EmptyCells = new List<int>(); 
+
 		private enum Players { 
 		USER, COMPUTER
 		}
@@ -61,7 +63,11 @@ namespace TicTacToe
         {
 			for (int i = 1; i < BoardSize; i++)
 				if (Board[i] == ' ')
+                {
+					EmptyCells.Add(i);
 					return true;
+				}
+					
 			return false;
 		}
 
@@ -93,7 +99,7 @@ namespace TicTacToe
 			{
                 Console.WriteLine("you won the toss");
 				CurrentPlayerLetter = UserLetter;
-				IdlePlayerLetter= ComputerLetter;
+				IdlePlayerLetter = ComputerLetter;
 				CurrentPlayer = Players.USER;
 				IdlePlayer = Players.COMPUTER;
 			}
@@ -107,13 +113,22 @@ namespace TicTacToe
 			}
 		}
 
-		void CheckGameStatus() {
+		bool CheckGameStatus() {
 			if (CheckRowWise(CurrentPlayerLetter) || CheckColumnWise(CurrentPlayerLetter) || CheckDiagonalWise(CurrentPlayerLetter))
+            {
 				Console.WriteLine("Player " + CurrentPlayer + " won");
+				return false;
+			}
+				
 			else if (!CheckFreeSpace())
+            {
 				Console.WriteLine("no free space left match drawn");
+				return false;
+			}
+				
 			else
 				ChangePlayer();
+			return true;
 		}
 
         private void ChangePlayer()
@@ -156,7 +171,114 @@ namespace TicTacToe
 			return false;
 		}
 
-		static void Main(string[] args)
+		private void PlayUntilWin()
+		{
+			if (CurrentPlayer == Players.USER)
+				MakeMove();
+			else
+				ComputerMove();
+			ShowBoard();
+            while (CheckGameStatus())
+            {
+				switch (CurrentPlayer)
+                {
+					case Players.USER:
+						MakeMove();
+						break;
+					case Players.COMPUTER:
+						ComputerMove();
+						break;
+                }
+			ShowBoard();
+			}
+		}
+
+        private void ComputerMove()
+        {
+            if (CheckIfWins())
+            {
+                Console.WriteLine("move drawn");
+            }
+        }
+
+        private bool CheckIfWins()
+        {
+			foreach(int EmptyCell in EmptyCells)
+            {
+                switch (EmptyCell)
+                {
+					case 1:
+						if ((Board[2] == ComputerLetter && Board[3] == ComputerLetter) || (Board[4] == ComputerLetter && Board[7] == ComputerLetter)
+							|| (Board[5] == ComputerLetter && Board[9] == ComputerLetter))
+                        {
+							Board[1] = ComputerLetter;
+							return true;
+						}							
+						break;
+					case 2:
+						if ((Board[1] == ComputerLetter && Board[3] == ComputerLetter) || (Board[5] == ComputerLetter && Board[8] == ComputerLetter))
+						{
+							Board[2] = ComputerLetter;
+							return true;
+						}
+						break;
+					case 3:
+						if ((Board[1] == ComputerLetter && Board[2] == ComputerLetter) || (Board[6] == ComputerLetter && Board[9] == ComputerLetter)
+							|| (Board[5] == ComputerLetter && Board[7] == ComputerLetter))
+						{
+							Board[3] = ComputerLetter;
+							return true;
+						}
+						break;
+					case 4:
+						if ((Board[1] == ComputerLetter && Board[7] == ComputerLetter) || (Board[5] == ComputerLetter && Board[6] == ComputerLetter))
+						{
+							Board[4] = ComputerLetter;
+							return true;
+						}
+						break;
+					case 5:
+						if ((Board[2] == ComputerLetter && Board[8] == ComputerLetter) || (Board[4] == ComputerLetter && Board[6] == ComputerLetter))
+						{
+							Board[5] = ComputerLetter;
+							return true;
+						}
+						break;
+					case 6:
+						if ((Board[3] == ComputerLetter && Board[9] == ComputerLetter) || (Board[4] == ComputerLetter && Board[5] == ComputerLetter))
+						{
+							Board[6] = ComputerLetter;
+							return true;
+						}
+						break;
+					case 7:
+						if ((Board[1] == ComputerLetter && Board[4] == ComputerLetter) || (Board[8] == ComputerLetter && Board[9] == ComputerLetter)
+							|| (Board[5] == ComputerLetter && Board[3] == ComputerLetter))
+						{
+							Board[7] = ComputerLetter;
+							return true;
+						}
+						break;
+					case 8:
+						if ((Board[2] == ComputerLetter && Board[5] == ComputerLetter) || (Board[7] == ComputerLetter && Board[9] == ComputerLetter))
+						{
+							Board[8] = ComputerLetter;
+							return true;
+						}
+						break;
+					case 9:
+						if ((Board[3] == ComputerLetter && Board[6] == ComputerLetter) || (Board[7] == ComputerLetter && Board[8] == ComputerLetter)
+							|| (Board[1] == ComputerLetter && Board[5] == ComputerLetter))
+						{
+							Board[9] = ComputerLetter;
+							return true;
+						}
+						break;
+				}				
+            }
+			return false;
+		}
+        static void Main(string[] args)
 		{
 			Console.WriteLine("TicTacToe");
 			//Initialise game
@@ -169,15 +291,8 @@ namespace TicTacToe
 			TicTacToeGame.ShowBoard();
 
 			TicTacToeGame.MakeToss();
-			//make move
-			TicTacToeGame.MakeMove();
-			TicTacToeGame.ShowBoard();
 
-			TicTacToeGame.CheckGameStatus();
-			//make move
-			TicTacToeGame.MakeMove();
-
-			TicTacToeGame.ShowBoard();
-		}
-	}
+			TicTacToeGame.PlayUntilWin();
+		}      
+    }
 }
