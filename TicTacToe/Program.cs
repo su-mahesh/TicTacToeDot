@@ -9,12 +9,14 @@ namespace TicTacToe
 		private char UserLetter;
 		private char ComputerLetter;
 		private char CurrentPlayerLetter;
+		private char IdlePlayerLetter;
  
 		private enum Players { 
 		USER, COMPUTER
 		}
 
 		private Players CurrentPlayer;
+		private Players IdlePlayer;
 
 		//initialise board
 		TicTacToe()
@@ -89,14 +91,69 @@ namespace TicTacToe
 
 			if (TossArray[new Random().Next(0, 2)] == PlayerToss)
 			{
+                Console.WriteLine("you won the toss");
 				CurrentPlayerLetter = UserLetter;
+				IdlePlayerLetter= ComputerLetter;
 				CurrentPlayer = Players.USER;
+				IdlePlayer = Players.COMPUTER;
 			}
 			else
-			{
+            {
+                Console.WriteLine("computer won the toss");
 				CurrentPlayerLetter = ComputerLetter;
+				IdlePlayerLetter = UserLetter;
 				CurrentPlayer = Players.COMPUTER;
+				IdlePlayer = Players.USER;
 			}
+		}
+
+		void CheckGameStatus() {
+			if (CheckRowWise(CurrentPlayerLetter) || CheckColumnWise(CurrentPlayerLetter) || CheckDiagonalWise(CurrentPlayerLetter))
+				Console.WriteLine("Player " + CurrentPlayer + " won");
+			else if (!CheckFreeSpace())
+				Console.WriteLine("no free space left match drawn");
+			else
+				ChangePlayer();
+		}
+
+        private void ChangePlayer()
+        {
+			Players player = CurrentPlayer;
+			CurrentPlayer = IdlePlayer;
+			IdlePlayer = player;
+
+			char Letter = CurrentPlayerLetter;
+			CurrentPlayerLetter = IdlePlayerLetter;
+			IdlePlayerLetter = Letter;					
+		}
+
+        private bool CheckRowWise(char CheckLetter)
+        {
+			if (Board[1] == CheckLetter && Board[2] == CheckLetter && Board[3] == CheckLetter)
+				return true;
+			if (Board[4] == CheckLetter && Board[5] == CheckLetter && Board[6] == CheckLetter)
+				return true;
+			if (Board[7] == CheckLetter && Board[8] == CheckLetter && Board[9] == CheckLetter)
+				return true;
+			return false;
+		}
+		private bool CheckColumnWise(char CheckLetter)
+		{
+			if (Board[1] == CheckLetter && Board[4] == CheckLetter && Board[7] == CheckLetter)
+				return true;
+			if (Board[2] == CheckLetter && Board[5] == CheckLetter && Board[8] == CheckLetter)
+				return true;
+			if (Board[3] == CheckLetter && Board[6] == CheckLetter && Board[9] == CheckLetter)
+				return true;
+			return false;
+		}
+		private bool CheckDiagonalWise(char CheckLetter)
+		{
+			if (Board[1] == CheckLetter && Board[5] == CheckLetter && Board[9] == CheckLetter)
+				return true;
+			if (Board[3] == CheckLetter && Board[5] == CheckLetter && Board[3] == CheckLetter)
+				return true;
+			return false;
 		}
 
 		static void Main(string[] args)
@@ -116,6 +173,7 @@ namespace TicTacToe
 			TicTacToeGame.MakeMove();
 			TicTacToeGame.ShowBoard();
 
+			TicTacToeGame.CheckGameStatus();
 			//make move
 			TicTacToeGame.MakeMove();
 
