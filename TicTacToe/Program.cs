@@ -50,15 +50,18 @@ namespace TicTacToe
 
 		//make move on board on desired index
 		public void MakeMove() {
+
             Console.WriteLine("enter your index bewtween 1-9:");
             int InputIndex = Convert.ToInt32(Console.ReadLine());
 			if (InputIndex > 0 && InputIndex < 10)
+			{
 				if (Board[InputIndex] == ' ')
 					Board[InputIndex] = PlayerLetter;
 				else
-                    Console.WriteLine("Index is not empty");
+					Console.WriteLine("Index is not empty");
+			}
 			else
-                Console.WriteLine("wrong index");
+				Console.WriteLine("wrong index");
 		}
 		static void Main(string[] args)
 		{
@@ -74,6 +77,8 @@ namespace TicTacToe
 
 			//make move
 			TicTacToeGame.MakeMove();
+
+			TicTacToeGame.ShowBoard();
 		}
 	}
 }
