@@ -116,13 +116,13 @@ namespace TicTacToe
 		bool CheckGameStatus() {
 			if (CheckRowWise(CurrentPlayerLetter) || CheckColumnWise(CurrentPlayerLetter) || CheckDiagonalWise(CurrentPlayerLetter))
             {
-				Console.WriteLine("Player " + CurrentPlayer + " won");
+				Console.WriteLine("Player " + CurrentPlayer + " won\n Game Over");
 				return false;
 			}
 				
 			else if (!CheckFreeSpace())
             {
-				Console.WriteLine("no free space left match drawn");
+				Console.WriteLine("no free space left match drawn\nGame Over");
 				return false;
 			}
 				
@@ -171,7 +171,7 @@ namespace TicTacToe
 			return false;
 		}
 
-		private void PlayUntilWin()
+		private void PlayUntilGameOver()
 		{
 			if (CurrentPlayer == Players.USER)
 				MakeMove();
@@ -198,9 +198,7 @@ namespace TicTacToe
 			if (CheckIfWinsOrBlock(ComputerLetter) || CheckIfWinsOrBlock(UserLetter) || TakeAvailableCorner() || TakeCenterIfAvailable() || TakeAvailableSide())
 			{
 				Console.WriteLine("computers move drawn");
-			}
-			
-			
+			}			
         }
 
         private bool TakeAvailableSide()
@@ -356,7 +354,7 @@ namespace TicTacToe
 
 			TicTacToeGame.MakeToss();
 
-			TicTacToeGame.PlayUntilWin();
+			TicTacToeGame.PlayUntilGameOver();
 		}      
     }
 }
