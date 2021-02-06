@@ -5,10 +5,9 @@ namespace TicTacToe
 	class TicTacToe
 	{
 		private const int BoardSize = 10;
-		private char ComputerLetter = ' ';
-		private char PlayerLetter = ' ';
 		private char[] Board = new char[BoardSize];
-
+		
+		//initialise board
 		TicTacToe()
 		{
 			for (int i = 0; i < BoardSize; i++)
@@ -42,8 +41,10 @@ namespace TicTacToe
 		static void Main(string[] args)
 		{
 			Console.WriteLine("TicTacToe");
-
+			//Initialise game
 			TicTacToe TicTacToeGame = new TicTacToe();
+
+			//show blank board
 			TicTacToeGame.ShowBoard();
 
 
