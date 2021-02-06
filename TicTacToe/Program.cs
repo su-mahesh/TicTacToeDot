@@ -195,12 +195,47 @@ namespace TicTacToe
 
 		private void ComputerMove()
 		{
-			if (CheckIfWinsOrBlock(ComputerLetter) || CheckIfWinsOrBlock(UserLetter) || TakeAvailableCorner())
+			if (CheckIfWinsOrBlock(ComputerLetter) || CheckIfWinsOrBlock(UserLetter) || TakeAvailableCorner() || TakeCenterIfAvailable() || TakeAvailableSide())
 			{
 				Console.WriteLine("computers move drawn");
 			}
 			
 			
+        }
+
+        private bool TakeAvailableSide()
+        {
+			if (Board[2] == ' ')
+			{
+				Board[2] = ComputerLetter;
+				return true;
+			}
+			else if (Board[6] == ' ')
+			{
+				Board[6] = ComputerLetter;
+				return true;
+			}
+			else if (Board[8] == ' ')
+			{
+				Board[8] = ComputerLetter;
+				return true;
+			}
+			else if (Board[4] == ' ')
+			{
+				Board[4] = ComputerLetter;
+				return true;
+			}
+			return false;
+		}
+
+        private bool TakeCenterIfAvailable()
+        {
+            if(Board[5] == ' ')
+            {
+				Board[5] = ComputerLetter;
+				return true;
+			}
+			return false;				
         }
 
         private bool TakeAvailableCorner()
