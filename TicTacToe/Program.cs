@@ -48,20 +48,30 @@ namespace TicTacToe
 			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
 		}
 
+		public bool CheckFreeSpace()
+        {
+			for (int i = 1; i < BoardSize; i++)
+				if (Board[i] == ' ')
+					return true;
+			return false;
+		}
+
 		//make move on board on desired index
 		public void MakeMove() {
-
-            Console.WriteLine("enter your index bewtween 1-9:");
-            int InputIndex = Convert.ToInt32(Console.ReadLine());
-			if (InputIndex > 0 && InputIndex < 10)
-			{
-				if (Board[InputIndex] == ' ')
-					Board[InputIndex] = PlayerLetter;
+			if (CheckFreeSpace())
+            {
+				Console.WriteLine("enter your index bewtween 1-9:");
+				int InputIndex = Convert.ToInt32(Console.ReadLine());
+				if (InputIndex > 0 && InputIndex < 10)
+				{
+					if (Board[InputIndex] == ' ')
+						Board[InputIndex] = PlayerLetter;
+					else
+						Console.WriteLine("Index is not empty");
+				}
 				else
-					Console.WriteLine("Index is not empty");
+					Console.WriteLine("wrong index");
 			}
-			else
-				Console.WriteLine("wrong index");
 		}
 		static void Main(string[] args)
 		{
@@ -73,6 +83,11 @@ namespace TicTacToe
 			TicTacToeGame.ChooseLetter();
 
 			//show blank board
+			TicTacToeGame.ShowBoard();
+
+			//make move
+			TicTacToeGame.MakeMove();
+
 			TicTacToeGame.ShowBoard();
 
 			//make move
