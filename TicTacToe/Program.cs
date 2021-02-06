@@ -27,7 +27,9 @@ namespace TicTacToe
 				Board[i] = ' ';
 			Console.WriteLine("**Game started**");
 		}
-		public void ShowBoard()
+
+		//Show Game Board
+		public void ShowGameBoard()
 		{
 			int BoardIndex = 1;
 
@@ -59,6 +61,7 @@ namespace TicTacToe
 			ComputerLetter = UserLetter == 'X' ? 'O' : 'X';
 		}
 
+		//Check free cells
 		public bool CheckFreeSpace()
         {	bool flag = false;
 			EmptyCells.Clear();
@@ -72,7 +75,7 @@ namespace TicTacToe
 		}
 
 		//make move on board on desired index
-		public void MakeMove() {
+		public void MakeUserMove() {
 			if (CheckFreeSpace())
             {
 				Console.WriteLine("enter your index bewtween 1-9:");
@@ -89,7 +92,8 @@ namespace TicTacToe
 			}
 		}
 
-		public void MakeToss() {
+		//determine toss
+		public void FlipToss() {
 			char[] TossArray = new Char[2] { 'H', 'T' };
 			Console.WriteLine("Toss");
 			Console.WriteLine("choose H head or T tail");
@@ -112,7 +116,7 @@ namespace TicTacToe
 				IdlePlayer = Players.USER;
 			}
 		}
-
+		//Check game status
 		bool CheckGameStatus() {
 			if (CheckRowWise(CurrentPlayerLetter) || CheckColumnWise(CurrentPlayerLetter) || CheckDiagonalWise(CurrentPlayerLetter))
             {
@@ -131,6 +135,7 @@ namespace TicTacToe
 			return true;
 		}
 
+		//change playing player
         private void ChangePlayer()
         {
 			Players player = CurrentPlayer;
@@ -141,7 +146,7 @@ namespace TicTacToe
 			CurrentPlayerLetter = IdlePlayerLetter;
 			IdlePlayerLetter = Letter;					
 		}
-
+		//row wise cells check
         private bool CheckRowWise(char CheckLetter)
         {
 			if (Board[1] == CheckLetter && Board[2] == CheckLetter && Board[3] == CheckLetter)
@@ -152,6 +157,7 @@ namespace TicTacToe
 				return true;
 			return false;
 		}
+		//column wise cells check
 		private bool CheckColumnWise(char CheckLetter)
 		{
 			if (Board[1] == CheckLetter && Board[4] == CheckLetter && Board[7] == CheckLetter)
@@ -162,6 +168,8 @@ namespace TicTacToe
 				return true;
 			return false;
 		}
+
+		//Diagonal wise cells check
 		private bool CheckDiagonalWise(char CheckLetter)
 		{
 			if (Board[1] == CheckLetter && Board[5] == CheckLetter && Board[9] == CheckLetter)
@@ -171,28 +179,30 @@ namespace TicTacToe
 			return false;
 		}
 
+		//play until win or draw
 		private void PlayUntilGameOver()
 		{
 			if (CurrentPlayer == Players.USER)
-				MakeMove();
+				MakeUserMove();
 			else
 				ComputerMove();
-			ShowBoard();
+			ShowGameBoard();
             while (CheckGameStatus())
             {
 				switch (CurrentPlayer)
                 {
 					case Players.USER:
-						MakeMove();
+						MakeUserMove();
 						break;
 					case Players.COMPUTER:
 						ComputerMove();
 						break;
                 }
-			ShowBoard();
+			ShowGameBoard();
 			}
 		}
 
+		//computer move on baord
 		private void ComputerMove()
 		{
 			if (CheckIfWinsOrBlock(ComputerLetter) || CheckIfWinsOrBlock(UserLetter) || TakeAvailableCorner() || TakeCenterIfAvailable() || TakeAvailableSide())
@@ -200,7 +210,7 @@ namespace TicTacToe
 				Console.WriteLine("computers move drawn");
 			}			
         }
-
+		//take available any empty side
         private bool TakeAvailableSide()
         {
 			if (Board[2] == ' ')
@@ -226,6 +236,7 @@ namespace TicTacToe
 			return false;
 		}
 
+		// take cneter cell if available
         private bool TakeCenterIfAvailable()
         {
             if(Board[5] == ' ')
@@ -235,7 +246,7 @@ namespace TicTacToe
 			}
 			return false;				
         }
-
+		//take any available corner
         private bool TakeAvailableCorner()
         {
 			if (Board[1] == ' ')
@@ -261,7 +272,7 @@ namespace TicTacToe
 
 			return false;
         }
-
+		//check is computer winning or block user winning
         private bool CheckIfWinsOrBlock(char CheckLetter)
         {
 			foreach(int EmptyCell in EmptyCells)
@@ -353,14 +364,14 @@ namespace TicTacToe
 				TicTacToeGame.ChooseLetter();
 
 				//show blank board
-				TicTacToeGame.ShowBoard();
+				TicTacToeGame.ShowGameBoard();
 
-				TicTacToeGame.MakeToss();
+				TicTacToeGame.FlipToss();
 
 				TicTacToeGame.PlayUntilGameOver();
 
                 Console.WriteLine("Play again? Y | N :");
-                Choice = Console.ReadLine()[0];
+                Choice = Console.ReadLine().ToUpper()[0];
 			}			
 		}      
     }
