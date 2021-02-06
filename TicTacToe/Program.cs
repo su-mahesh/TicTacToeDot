@@ -60,15 +60,15 @@ namespace TicTacToe
 		}
 
 		public bool CheckFreeSpace()
-        {
+        {	bool flag = false;
+			EmptyCells.Clear();
 			for (int i = 1; i < BoardSize; i++)
 				if (Board[i] == ' ')
-                {
+                {					
 					EmptyCells.Add(i);
-					return true;
+					flag = true;
 				}
-					
-			return false;
+			return flag;
 		}
 
 		//make move on board on desired index
@@ -193,82 +193,84 @@ namespace TicTacToe
 			}
 		}
 
-        private void ComputerMove()
-        {
-            if (CheckIfWins())
+		private void ComputerMove()
+		{
+            Console.WriteLine("computersmove");
+			if (CheckFreeSpace() && (CheckIfWinsOrBlock(ComputerLetter) || CheckIfWinsOrBlock(UserLetter)))
             {
-                Console.WriteLine("move drawn");
+                Console.WriteLine("computer move drawn");
             }
+			
         }
 
-        private bool CheckIfWins()
+        private bool CheckIfWinsOrBlock(char CheckLetter)
         {
 			foreach(int EmptyCell in EmptyCells)
             {
                 switch (EmptyCell)
                 {
 					case 1:
-						if ((Board[2] == ComputerLetter && Board[3] == ComputerLetter) || (Board[4] == ComputerLetter && Board[7] == ComputerLetter)
-							|| (Board[5] == ComputerLetter && Board[9] == ComputerLetter))
+						if ((Board[2] == CheckLetter && Board[3] == CheckLetter) || (Board[4] == CheckLetter && Board[7] == CheckLetter)
+							|| (Board[5] == CheckLetter && Board[9] == CheckLetter))
                         {
 							Board[1] = ComputerLetter;
 							return true;
 						}							
 						break;
 					case 2:
-						if ((Board[1] == ComputerLetter && Board[3] == ComputerLetter) || (Board[5] == ComputerLetter && Board[8] == ComputerLetter))
+						if ((Board[1] == CheckLetter && Board[3] == CheckLetter) || (Board[5] == CheckLetter && Board[8] == CheckLetter))
 						{
 							Board[2] = ComputerLetter;
 							return true;
 						}
 						break;
 					case 3:
-						if ((Board[1] == ComputerLetter && Board[2] == ComputerLetter) || (Board[6] == ComputerLetter && Board[9] == ComputerLetter)
-							|| (Board[5] == ComputerLetter && Board[7] == ComputerLetter))
+						if ((Board[1] == CheckLetter && Board[2] == CheckLetter) || (Board[6] == CheckLetter && Board[9] == CheckLetter)
+							|| (Board[5] == CheckLetter && Board[7] == CheckLetter))
 						{
 							Board[3] = ComputerLetter;
 							return true;
 						}
 						break;
 					case 4:
-						if ((Board[1] == ComputerLetter && Board[7] == ComputerLetter) || (Board[5] == ComputerLetter && Board[6] == ComputerLetter))
+						if ((Board[1] == CheckLetter && Board[7] == CheckLetter) || (Board[5] == CheckLetter && Board[6] == CheckLetter))
 						{
 							Board[4] = ComputerLetter;
 							return true;
 						}
 						break;
 					case 5:
-						if ((Board[2] == ComputerLetter && Board[8] == ComputerLetter) || (Board[4] == ComputerLetter && Board[6] == ComputerLetter))
+						if ((Board[2] == CheckLetter && Board[8] == CheckLetter) || (Board[4] == CheckLetter && Board[6] == CheckLetter))
 						{
 							Board[5] = ComputerLetter;
 							return true;
 						}
 						break;
 					case 6:
-						if ((Board[3] == ComputerLetter && Board[9] == ComputerLetter) || (Board[4] == ComputerLetter && Board[5] == ComputerLetter))
+						if ((Board[3] == CheckLetter && Board[9] == CheckLetter) || (Board[4] == CheckLetter && Board[5] == CheckLetter))
 						{
 							Board[6] = ComputerLetter;
 							return true;
 						}
 						break;
 					case 7:
-						if ((Board[1] == ComputerLetter && Board[4] == ComputerLetter) || (Board[8] == ComputerLetter && Board[9] == ComputerLetter)
-							|| (Board[5] == ComputerLetter && Board[3] == ComputerLetter))
+						if ((Board[1] == CheckLetter && Board[4] == CheckLetter) || (Board[8] == CheckLetter && Board[9] == CheckLetter)
+							|| (Board[5] == CheckLetter && Board[3] == CheckLetter))
 						{
 							Board[7] = ComputerLetter;
 							return true;
 						}
 						break;
 					case 8:
-						if ((Board[2] == ComputerLetter && Board[5] == ComputerLetter) || (Board[7] == ComputerLetter && Board[9] == ComputerLetter))
+						if ((Board[2] == CheckLetter && Board[5] == CheckLetter) || (Board[7] == CheckLetter && Board[9] == CheckLetter))
 						{
 							Board[8] = ComputerLetter;
 							return true;
 						}
 						break;
 					case 9:
-						if ((Board[3] == ComputerLetter && Board[6] == ComputerLetter) || (Board[7] == ComputerLetter && Board[8] == ComputerLetter)
-							|| (Board[1] == ComputerLetter && Board[5] == ComputerLetter))
+						if ((Board[3] == CheckLetter && Board[6] == CheckLetter) || (Board[7] == CheckLetter && Board[8] == CheckLetter)
+							|| (Board[1] == CheckLetter && Board[5] == CheckLetter))
 						{
 							Board[9] = ComputerLetter;
 							return true;
