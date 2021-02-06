@@ -47,7 +47,17 @@ namespace TicTacToe
 			PlayerLetter = Console.ReadLine().ToUpper()[0];
 			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
 		}
-
+		public void MakeMove() {
+            Console.WriteLine("enter your index bewtween 1-9:");
+            int InputIndex = Convert.ToInt32(Console.ReadLine());
+			if (InputIndex > 0 && InputIndex < 10)
+				if (Board[InputIndex] == ' ')
+					Board[InputIndex] = PlayerLetter;
+				else
+                    Console.WriteLine("Index not empty");
+			else
+                Console.WriteLine("wrong index");
+		}
 		static void Main(string[] args)
 		{
 			Console.WriteLine("TicTacToe");
@@ -59,6 +69,9 @@ namespace TicTacToe
 
 			//show blank board
 			TicTacToeGame.ShowBoard();
+
+			//make move
+			TicTacToeGame.MakeMove();
 		}
 	}
 }
