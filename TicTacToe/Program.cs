@@ -43,7 +43,6 @@ namespace TicTacToe
 		{
 			Console.WriteLine("enter your letter (X or O):");
 			PlayerLetter = Console.ReadLine()[0];
-
 			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
 		}
 
@@ -53,13 +52,12 @@ namespace TicTacToe
 			//Initialise game
 			TicTacToe TicTacToeGame = new TicTacToe();
 
+			//choose letter
+			TicTacToeGame.ChooseLetter();
+
 			//show blank board
 			TicTacToeGame.ShowBoard();
 
-			//choose letter
-			TicTacToeGame.ChooseLetter();
 		}
-
- 
-    }
+	}
 }
