@@ -39,6 +39,13 @@ namespace TicTacToe
 			}
 			Console.WriteLine("");
 		}
+		private void ChooseLetter()
+		{
+			Console.WriteLine("enter your letter (X or O):");
+			PlayerLetter = Console.ReadLine()[0];
+
+			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
+		}
 
 		static void Main(string[] args)
 		{
@@ -49,17 +56,10 @@ namespace TicTacToe
 			//show blank board
 			TicTacToeGame.ShowBoard();
 
+			//choose letter
 			TicTacToeGame.ChooseLetter();
-
-
 		}
 
-        private void ChooseLetter()
-        {
-            Console.WriteLine("enter your letter (X or O):");
-            PlayerLetter = Console.ReadLine()[0];
-
-			ComputerLetter = PlayerLetter == 'X' ? 'O' : 'X';
-        }
+ 
     }
 }
